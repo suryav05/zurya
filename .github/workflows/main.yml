@@ -1,0 +1,21 @@
+
+name: sync to S3
+      -main
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+    - name: chekcout Repository
+      uses: action/chekcout@v3
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ screts.AWS_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+        aws-region: us-east-1
+    - name: Sync to s3
+      run: aws s3 sync . s3://22305x/Website-Code/index.html
+
+on:
+  push:
+    branches:
